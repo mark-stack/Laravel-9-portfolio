@@ -6,7 +6,7 @@
     <meta name="description" content="">
 
     <!-- CSRF token -->
-    <meta name="csrf-token" content="rz6qhQjJTeHld1ChnQOlVAUoT0MKqIehWHUkxGRl">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Mark Evans - Laravel Developer</title>
 
@@ -36,8 +36,15 @@
       td {
         vertical-align: baseline;
       }
+      .badge:hover {
+        border: solid 2px green;
+      }
   
     </style>
+
+    <!-- livewire & Alpine.JS-->
+    @livewireStyles
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
   </head>
   <body>
@@ -50,7 +57,11 @@
 
     @include('frontend.footer')
 
+    <!-- Bootstrap 5 -->
     <script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <!-- livewire -->
+    @livewireScripts
 
   </body>
 

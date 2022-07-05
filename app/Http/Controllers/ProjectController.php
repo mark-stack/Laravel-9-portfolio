@@ -43,18 +43,15 @@ class ProjectController extends Controller
         //
     }
 
-    public function edit($id)
+    public function edit(Project $project) 
     {
-        $project = Project::findorfail($id);
-
         return view('backend.project_edit',compact('project'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Project $project) 
     {
         $data = $request->all();
 
-        $project = Project::findorfail($id);
         $project->update($data);
 
         return back()->with('success_project','Successfully updated project');

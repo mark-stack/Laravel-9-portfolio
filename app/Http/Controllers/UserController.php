@@ -10,31 +10,24 @@ class UserController extends Controller
     public function dashboard()
     {
         //return view('backend.user_dashboard');
-        return redirect('/user/stripe');
+        return redirect('/user/stripe-integration');
     }
 
     public function exampleStripe(){
 
         $user = Auth()->user();
 
+        //Current subscription
         $plans = Plan::all();
-
-        if($user->subscription('bronze')){
-            $current_subscription = 'bronze';
+        $current_subscription = null;
+        foreach($plans as $plan){
+            if($user->subscription($plan->name) != null){
+                $current_subscription = $plan->name;
+            }
         }
-        elseif($user->subscription('silver')){
-            $current_subscription = 'silver';
-        }
-        elseif($user->subscription('gold')){
-            $current_subscription = 'gold';
-        }
-        else{
-            $current_subscription = null;
-        }
-
+        
         $current_invoices = $user->invoicesIncludingPending();
         $upcoming_invoice = $user->upcomingInvoice();
-        //dd($upcoming_invoice);
 
         return view('backend.stripe.exampleStripe',compact('plans','user','current_subscription','current_invoices','upcoming_invoice'));
     }
@@ -43,14 +36,18 @@ class UserController extends Controller
     {
         $user = Auth()->user();
 
-        if($user->subscription('bronze')){
-            $user->subscription('bronze')->cancel();
+        //Current subscription
+        $plans = Plan::all();
+        $current_subscription = null;
+        foreach($plans as $plan){
+            if($user->subscription($plan->name) != null){
+                $current_subscription = $plan->name;
+            }
         }
-        elseif($user->subscription('silver')){
-            $user->subscription('silver')->cancel();
-        }
-        elseif($user->subscription('gold')){
-            $user->subscription('gold')->cancel();
+
+        //Cancel
+        if($current_subscription){
+            $user->subscription($current_subscription)->cancel();
         }
 
         return redirect()->route('billing');
@@ -60,27 +57,21 @@ class UserController extends Controller
     {
         $user = Auth()->user();
 
-        if($user->subscription('bronze')){
-            $user->subscription('bronze')->resume();
+        //Current subscription
+        $plans = Plan::all();
+        $current_subscription = null;
+        foreach($plans as $plan){
+            if($user->subscription($plan->name) != null){
+                $current_subscription = $plan->name;
+            }
         }
-        elseif($user->subscription('silver')){
-            $user->subscription('silver')->resume();
-        }
-        elseif($user->subscription('gold')){
-            $user->subscription('gold')->resume();
+
+        //Resume
+        if($current_subscription){
+            $user->subscription($current_subscription)->resume();
         }
 
         return redirect()->route('billing');
-    }
-
-    public function exampleGraphql(){
-
-        return view('backend.exampleGraphql');
-    }
-
-    public function exampleMobile(){
-
-        return view('backend.exampleMobile');
     }
 
     public function exampleSocials(){
@@ -90,32 +81,8 @@ class UserController extends Controller
 
     public function internalProjects($name){
 
-        //Replace hyphens
-        $name = str_replace('-',' ',$name);
-
-        //Stripe
-        if($name == 'stripe integration'){
-            return redirect('/user/stripe');
-        }
-
-        //Calendar
-        if($name == 'calendar'){
-            return redirect('/user/calendar');
-        }
-
-        //GraphQL
-        if($name == 'graphql'){
-            return redirect('/user/graphql');
-        }
-
-        //Mobile verification
-        if($name == 'mobile verification'){
-            return redirect('/user/mobile');
-        }
-
-        //Socials
-        if($name == 'socials login'){
-            return redirect('/user/socials');
-        }
+        //'name' will be URL path. e.g 'socials-login'
+        return redirect('/user/'.$name);
+        
     }
 }

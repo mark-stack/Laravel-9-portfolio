@@ -46,6 +46,10 @@
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
     @endif
 
+    <!-- livewire & Alpine.JS-->
+    @livewireStyles
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
   </head>
 
   <body>
@@ -99,6 +103,10 @@
     <script>
       $("#zero_config").DataTable();
     </script>
+
+    <!-- livewire -->
+    @livewireScripts
+    
   </body>
 </html>
 

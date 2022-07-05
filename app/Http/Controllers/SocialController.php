@@ -1,97 +1,53 @@
 <?php
- 
+/*
+S.O.L.I.D design principals:
+(S)ingle purpose: Direct logins from Google, Linkedin etc
+(O)pen/close: What is the main dynamic variable to extend? Adding social networks
+(L)iskov substitution: Make an Interface, and typehint the variables in the functions to prove alignment,
+(I)nterface segregation: Dont make a mega interface. Make several then you can have interface1, interface2, ....
+(D)ependency inversion: High level functions shouldn't rely on low level functions
+*/
+
 namespace App\Http\Controllers;
  
 use Socialite;
 use App\Models\User;
 use Auth;
 
-
 class SocialController extends Controller{
 
-    public function redirect_google(){
+    public function redirect($social){
 
-        //redirect
-        return Socialite::driver('google')->redirect();
+        return Socialite::driver($social)->redirect();
     }
 
-    public function callback_google(){
-        
-        //$getInfo = Socialite::driver('google')->user();
-        $getInfo = Socialite::driver('google')->stateless()->user();
+    public function callback($social){
 
-        //Response is array of USER,REDIRECT,FLASH MSG
+        $getInfo = Socialite::driver($social)->stateless()->user();
+
         $user = $this->createUser($getInfo);
 
         auth()->login($user);
-        
-        //User was created
-        if($user != null){
 
-            if(Auth::user()->isAdmin()){
-                return redirect()->to('/admin');
-            }
-
-            if(Auth::user()->isUser()){
-                //check session for remembering project from landing page
-                $project = session('project');
-
-                if($project){
-                    return redirect('/user/'.$project);
-                }
-                else{
-                    return redirect('/user');
-                }
-            }
+        //Admin
+        if(Auth::user()->isAdmin()){
+            return redirect()->to('/admin');
         }
-        //User not created
-        else{
-            return redirect('/');
+
+        //General user
+        if(Auth::user()->isUser()){
+            //check session for remembering project from landing page
+            $project = session('project');
+
+            if($project){
+                return redirect('/user/'.$project);
+            }
+            else{
+                return redirect('/user');
+            }
         }
     }
-
-    public function redirect_linkedin(){
-
-        //redirect
-        return Socialite::driver('linkedin')->redirect();
-    }
-
-    public function callback_linkedin(){
-        
-        $getInfo = Socialite::driver('linkedin')->stateless()->user();
-        
-        //Response is array of USER,REDIRECT,FLASH MSG
-        $user = $this->createUser($getInfo);
-        
-
-        auth()->login($user);
-        
-        //User was created
-        if($user != null){
-
-            if(Auth::user()->isAdmin()){
-                return redirect()->to('/admin');
-            }
-
-            if(Auth::user()->isUser()){
-                //check session for remembering project from landing page
-                $project = session('project');
-
-                if($project){
-                    return redirect('/user/'.$project);
-                }
-                else{
-                    return redirect('/user');
-                }
-                
-            }
-        }
-        //User not created
-        else{
-            return redirect('/');
-        }
-    }
-
+   
     function createUser($getInfo){
     
         $user = User::where('email', $getInfo->email)->first();
@@ -107,11 +63,9 @@ class SocialController extends Controller{
                 'first_name' => $first_name,
                 'last_name' => $last_name,
             ]);
-
         }
 
         return $user;
     }
-
 }
 

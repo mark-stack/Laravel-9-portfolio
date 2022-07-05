@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use Illuminate\Http\Request;
+use App\Services\MovecardService;
 
 class AdminController extends Controller
 {
@@ -24,61 +25,25 @@ class AdminController extends Controller
         return back()->with('success_create','Successfully created project');
     }
 
-    public function projectPositionUp($id){
+    public function projectPositionUp($id){ 
 
         //Get project
         $project = Project::findorfail($id);
 
-        //Current position
-        $current_position = $project->position;
-
-        //Proposed position
-        $proposed_position = $current_position - 1;
-
-        //Can only lower number if proposed is above zero
-        if($proposed_position > 0){
-
-            //Look for an existing project with this position number, then swap
-            $swapped_project = Project::where('position',$proposed_position)->first();
-
-            if($swapped_project){
-                //This project
-                $project->position = $proposed_position;
-                $project->save();
-
-                //Swapped project
-                $swapped_project->position = $current_position;
-                $swapped_project->save();
-            }
-        }
-
+        //Service class to perform moving
+        (new MovecardService())->move($project,'up');
+      
         return back();
     }
 
-    public function projectPositionDown($id){
+    public function projectPositionDown($id){ 
 
         //Get project
         $project = Project::findorfail($id);
 
-        //Current position
-        $current_position = $project->position;
-
-        //Proposed position
-        $proposed_position = $current_position + 1;
-
-        //Look for an existing project with this position number, then swap
-        $swapped_project = Project::where('position',$proposed_position)->first();
-
-        if($swapped_project){
-            //This project
-            $project->position = $proposed_position;
-            $project->save();
-
-            //Swapped project
-            $swapped_project->position = $current_position;
-            $swapped_project->save();
-        }
-        
+        //Service class to perform moving
+        (new MovecardService())->move($project,'down');
+      
         return back();
     }
 }

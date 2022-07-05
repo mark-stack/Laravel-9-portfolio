@@ -63,19 +63,17 @@
               <i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Admin Dashboard</span>
             </a>
           </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/admin/cheatsheets" aria-expanded="false">
+              <i class="fa-solid fa-list" style="font-size: 20px;margin-left:10px;margin-right:5px"></i><span class="hide-menu"> Cheatsheets</span>
+            </a>
+          </li>
           <br><br>
         @endif
       
         <!-- User Menu -->
-        {{-- 
         <li class="sidebar-item">
-          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/user" aria-expanded="false">
-            <i class="fa-solid fa-home" style="font-size: 18px;margin-left:11px;margin-right:5px"></i><span class="hide-menu">Dashboard</span>
-          </a>
-        </li>
-        --}}
-        <li class="sidebar-item">
-          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/user/stripe" aria-expanded="false">
+          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/user/stripe-integration" aria-expanded="false">
             <i class="fa-brands fa-cc-stripe" style="font-size: 20px;margin-left:10px;margin-right:5px"></i><span class="hide-menu"> Stripe example</span>
           </a>
         </li>
@@ -84,20 +82,18 @@
             <i class="fa-solid fa-calendar-days" style="font-size: 20px;margin-left: 11px;margin-right: 10px;"></i><span class="hide-menu"> Calendar example</span>
           </a>
         </li>
-        {{-- 
         <li class="sidebar-item">
-          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/user/graphql" aria-expanded="false">
-            <i class="fa-solid fa-code" style="font-size: 20px;margin-left:7px;margin-right:5px"></i><span class="hide-menu"> GraphQL example</span>
+          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/user/unique-slug" aria-expanded="false">
+            <i class="fa-solid fa-circle-check" style="font-size: 20px;margin-left: 11px;margin-right: 10px;"></i><span class="hide-menu"> Unique Slug</span>
           </a>
         </li>
         <li class="sidebar-item">
-          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/user/mobile" aria-expanded="false">
-            <i class="fa-solid fa-mobile-screen-button" style="font-size: 20px;margin-left: 11px;margin-right: 12px;"></i><span class="hide-menu"> Mobile Verification example</span>
+          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/user/dependent-dropdown" aria-expanded="false">
+            <i class="fa-solid fa-bars-staggered" style="font-size: 20px;margin-left: 11px;margin-right: 10px;"></i><span class="hide-menu"> Dependent Dropdown</span>
           </a>
         </li>
-        --}}
         <li class="sidebar-item">
-          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/user/socials" aria-expanded="false">
+          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/user/socials-login" aria-expanded="false">
             <i class="fa-brands fa-google" style="font-size: 20px;margin-left: 11px;margin-right: 12px;"></i><span class="hide-menu"> Social login example</span>
           </a>
         </li>
