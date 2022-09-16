@@ -22,7 +22,7 @@
         </p>
         <br>
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-            <a href="mailto:marke1986@hotmail.com" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold">marke1986@hotmail.com</a>
+            <a href="mailto:mark.laravel.coder@gmail.com" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold">mark.laravel.coder@gmail.com</a>
         </div>
       </div>
     </div>
